@@ -2,3 +2,4 @@
     - HTML
     - CSS
     - GIT & GITHUB
+    - JAVASCRIPT BASIC/ADVANCE
