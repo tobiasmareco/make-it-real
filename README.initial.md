@@ -1,0 +1,4 @@
+### INITIAL MAKE IT REAL SECTION
+    - HTML
+    - CSS
+    - GIT & GITHUB
