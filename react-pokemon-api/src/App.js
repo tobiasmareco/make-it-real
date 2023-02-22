@@ -1,8 +1,11 @@
+import PokeHome from "./components/PokeHome";
+import PokeList from "./components/PokeList";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello Tobias</h1>
+      <PokeHome/>
+      <PokeList/>
     </div>
   );
 }
