@@ -1,6 +1,9 @@
 import express from 'express';
+import { conectDatabase } from './src/config/db.config.js';
 import { router } from './src/routes/index.router.js';
 const app = express();
+
+conectDatabase()
 
 app.use(express.json());
 
