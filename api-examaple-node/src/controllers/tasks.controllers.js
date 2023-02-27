@@ -2,7 +2,7 @@ import Tasks from "../models/index.models.js";
 
 export async function getAllTasks(req, res) {
   try {
-    const allTasks = await Tasks.find();
+    const allTasks = await Tasks.find({});
     if (!allTasks.length) {
       res.status(404).json({ message: "not tasks created" });
       return;
