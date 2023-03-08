@@ -1,13 +1,13 @@
 import express from 'express';
 import { conectDatabase } from './src/config/db.config.js';
-import { router } from './src/routes/index.router.js';
+import { router } from './src/routes/index.routes.js';
 const app = express();
 
 conectDatabase()
 
 app.use(express.json());
 
-app.use('/api',router)
+app.use(router)
 
 app.listen(3080,()=>{
     console.log(`listening on port 3080 http://localhost:3080/api`);
