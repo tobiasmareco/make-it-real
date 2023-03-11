@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 const taskSchema = new mongoose.Schema({
   title: {
     type: String,
-    require: [true, "Please add a title"],
+    required: [true, "Please add a title"],
   },
   description: {
     type: String,
+    required:true
   },
   status: { 
     type: Boolean,
