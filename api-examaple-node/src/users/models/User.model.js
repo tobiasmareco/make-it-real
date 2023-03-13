@@ -16,7 +16,7 @@ const userSchema = new Schema(
     },
     token: {
       type: String,
-    },
+    }, 
     confirmed: {
       type: Boolean,
       default: false,
