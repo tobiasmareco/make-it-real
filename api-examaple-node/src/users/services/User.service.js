@@ -1,15 +1,14 @@
 import {
-  createUser,
-  getAllUsers,
-  getUserById,
-  deleteUser,
-  updateUser,
+  repocreateUser,
+  repogetAllUsers,
+  repogetUserById,
+  repodeleteUser,
+  repoupdateUser,
 } from "../repository/User.repository.js";
 
 export async function serviceCreateUser(user) {
   try {
-    const result = await createUser(user);
-    comsole.log(result);
+    const result = await repocreateUser(user);
     return;
   } catch (error) {
     return error;
@@ -18,7 +17,8 @@ export async function serviceCreateUser(user) {
 
 export async function serviceGetAllUser() {
   try {
-    return await getAllUsers();
+    const result = await repogetAllUsers();
+    return result;
   } catch (error) {
     return error;
   }
@@ -26,7 +26,9 @@ export async function serviceGetAllUser() {
 
 export async function serviceGetUserId(id) {
   try {
-    return await getUserById(id);
+    const result = await repogetUserById(id);
+    console.log({serv:result})
+    return result;
   } catch (error) {
     return error;
   }
@@ -34,7 +36,7 @@ export async function serviceGetUserId(id) {
 
 export async function serviceDeleteUser(id) {
   try {
-    const { result, error } = await deleteUser(id);
+    const { result, error } = await repodeleteUser(id);
     if (error) {
       return error;
     }
@@ -46,9 +48,9 @@ export async function serviceDeleteUser(id) {
 
 export async function serviceUpdateUser(id, newUserData) {
   try {
-    const result = await updateUser(id, newUserData);
+    const result = await repoupdateUser(id, newUserData);
     return result;
   } catch (error) {
-    return error
+    return error;
   }
 }

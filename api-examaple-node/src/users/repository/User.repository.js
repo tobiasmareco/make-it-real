@@ -1,33 +1,34 @@
 import User from "../models/User.model.js";
 
-export const createUser = async (user) => {
+export const repocreateUser = async (user) => {
   try {
     const create = await User.create(user);
-    console.log(create);
     return create;
   } catch (error) {
     return error;
   }
 };
 
-export const getAllUsers = async () => {
+export const repogetAllUsers = async () => {
   try {
-    return await User.find({});
+    const result = await User.find({});
+    return result;
   } catch (error) {
     return error;
   }
 };
 
-export const getUserById = async (id) => {
+export const repogetUserById = async (id) => {
   try {
     const userId = await User.findById(id);
+    console.log({rep:userId})
     return userId;
   } catch (error) {
     return error;
   }
 };
 
-export const deleteUser = async (id) => {
+export const repodeleteUser = async (id) => {
   try {
     const result = await User.findByIdAndDelete(id);
     comsole.log({ "delete funct": result });
@@ -37,7 +38,7 @@ export const deleteUser = async (id) => {
   }
 };
 
-export const updateUser = async (id, newData) => {
+export const repoupdateUser = async (id, newData) => {
   try {
     const result = await User.findByIdAndUpdate(id, newData);
     return result;

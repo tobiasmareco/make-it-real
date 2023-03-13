@@ -6,21 +6,25 @@ import {
   serviceUpdateUser,
 } from "../services/User.service.js";
 
-export const getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res, next) => {
   try {
     const result = await serviceGetAllUser();
     res.status(200).json({ result });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    next(error.message);
   }
 };
 
-export const getUserById = async (req, res) => {
+export const getUserById = async (req, res, next) => {
   try {
     const result = await serviceGetUserId(req.params.id);
-    res.status(200).json({ message: "user by id", result });
+    console.log({cont:result})
+    if (!result) {
+      return next('User id not found');
+    }
+    res.status(200).json({ result });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    next(error.message);
   }
 };
 
