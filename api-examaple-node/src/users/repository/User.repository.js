@@ -1,13 +1,5 @@
+import { createToken } from "../../global/Token.js";
 import User from "../models/User.model.js";
-
-export const repocreateUser = async (user) => {
-  try {
-    const create = await User.create(user);
-    return create;
-  } catch (error) {
-    return error;
-  }
-};
 
 export const repogetAllUsers = async () => {
   try {
@@ -20,21 +12,36 @@ export const repogetAllUsers = async () => {
 
 export const repogetUserById = async (id) => {
   try {
-    const userId = await User.findById(id);
-    console.log({rep:userId})
-    return userId;
+    const result = await User.findById(id);
+    return { result };
   } catch (error) {
-    return error;
+    return { error };
+  }
+};
+
+export const repocreateUser = async (user) => {
+  try {
+    const createUser = {
+      ...user,
+      token: createToken(user.email, process.env.JWT_SECRET_KEY),
+    };
+    const result = await User.create(createUser);
+    return { result };
+  } catch (error) {
+    return { error };
   }
 };
 
 export const repodeleteUser = async (id) => {
   try {
+    const userDelete = await User.findById(id);
+    if (!userDelete) {
+      return { result: userDelete };
+    }
     const result = await User.findByIdAndDelete(id);
-    comsole.log({ "delete funct": result });
-    return result;
+    return { result };
   } catch (error) {
-    return error;
+    return { error };
   }
 };
 

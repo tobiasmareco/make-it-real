@@ -6,18 +6,12 @@ import {
   repoupdateUser,
 } from "../repository/User.repository.js";
 
-export async function serviceCreateUser(user) {
-  try {
-    const result = await repocreateUser(user);
-    return;
-  } catch (error) {
-    return error;
-  }
-}
-
 export async function serviceGetAllUser() {
   try {
     const result = await repogetAllUsers();
+    if (result.length < 1) {
+      return "not users found";
+    }
     return result;
   } catch (error) {
     return error;
@@ -26,9 +20,28 @@ export async function serviceGetAllUser() {
 
 export async function serviceGetUserId(id) {
   try {
-    const result = await repogetUserById(id);
-    console.log({serv:result})
+    const { result, error } = await repogetUserById(id);
+    if (error) {
+      return { message: error.message };
+    }
+    if (!result) {
+      return { message: "User id not found" };
+    }
+
     return result;
+  } catch (error) {
+    return { error };
+  }
+}
+
+export async function serviceCreateUser(user) {
+  try {
+    const { result, error } = await repocreateUser(user);
+    // console.log({res:result})
+    if (error) {
+      return { message: "email already exists", error };
+    }
+    return { message: "User created succesfully", result };
   } catch (error) {
     return error;
   }
@@ -38,7 +51,10 @@ export async function serviceDeleteUser(id) {
   try {
     const { result, error } = await repodeleteUser(id);
     if (error) {
-      return error;
+      return { message: error.message };
+    }
+    if (!result) {
+      return { message: `User with id ${id} not found` };
     }
     return result;
   } catch (error) {

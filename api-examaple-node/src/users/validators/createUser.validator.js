@@ -1,15 +1,18 @@
 import joi from "joi";
 
 const validatorCreate = joi.object({
-  email: joi.string().required().email({ minDomainSegments: 2 }),
-  password: joi.string().required().min(8),
+  email: joi.string().required().email({ minDomainSegments: 2 }).messages({'any.required':'Please add an email'}),
+  password: joi.string().required().min(8).messages({
+    'string.base' : 'please add an password',
+    'string.min':'password must have more than 7 characters',
+    'any.required':'add a valid password'
+  }),
 });
 
 export const validateUserCreate = (req, res, next) => {
-  const { error } = validatorCreate.validate(req.body);
+  const {error} = validatorCreate.validate(req.body);
   if (error) {
-    res.status(404).json({ message: error.message });
-    return;
+    return next(error.message)
   }
   next();
 };

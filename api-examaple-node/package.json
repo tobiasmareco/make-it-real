@@ -16,5 +16,8 @@
     "joi": "^17.8.3",
     "mongoose": "^6.10.0",
     "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.0"
   }
 }

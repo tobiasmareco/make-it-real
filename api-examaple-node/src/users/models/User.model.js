@@ -4,7 +4,7 @@ const userSchema = new Schema(
   {
     email: {
       type: String,
-      required: [true, "please add an email"],
+      required: true,
       unique: true,
     },
     password: {
@@ -14,11 +14,10 @@ const userSchema = new Schema(
     name: {
       type: String,
     },
-    active: {
-      type: Boolean,
-      default: true,
+    token: {
+      type: String,
     },
-    admin: {
+    confirmed: {
       type: Boolean,
       default: false,
     },

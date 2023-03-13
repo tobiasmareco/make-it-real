@@ -1,11 +1,11 @@
 import moongose from 'mongoose';
 export const conectDatabase = async ()=>{
     try {
-        const con = await moongose.connect('mongodb://127.0.0.1:27017/admin',{
+        const con = await moongose.connect(process.env.API_DATABASE,{
             useNewUrlParser:true,
             useUnifiedTopoLogy : true
         })
-        console.log('conected',con.connection.host)
+        console.log('conected to database',con.connection.host)
     } catch (error) {
         console.log(error);
     }
