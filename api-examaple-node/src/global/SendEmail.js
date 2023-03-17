@@ -2,11 +2,11 @@ import nodemailer from "nodemailer";
 
 export async function Send(userEmail, subject, html) {
   var transport = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
+    host: process.env.API_EMAIL_HOST,
+    port: process.env.API_EMAIL_PORT || 2525,
     auth: {
-      user: "091da217704ff5",
-      pass: "e2f789bc8ee74e",
+      user: process.env.API_EMAIL_USER,
+      pass: process.env.API_EMAIL_PASS,
     },
     tls: {
       // do not fail on invalid certs

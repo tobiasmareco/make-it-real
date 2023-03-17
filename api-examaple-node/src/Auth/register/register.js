@@ -11,12 +11,11 @@ export const registerUser = async (req, res, next) => {
     if (emailExist) {
       return next("Email already register");
     }
-    const create = await serviceCreateUser({ email, password });
-    await Send(
-      email,
-      "Confirm your account",
-      registerMessage(email, "http://localhost:3000/login")
-    );
+    /**
+     * TODO -> send data to backend for create user.
+     */
+    await serviceCreateUser({ email, password });
+    await Send(email, "Confirm your account", registerMessage(email, ""));
     res.status(201).json({
       message:
         "please check your email inbox , and confirm your account in TaskApp",

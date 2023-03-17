@@ -17,13 +17,6 @@ export const getAllUsers = async (req, res, next) => {
 
 export const getUserById = async (req, res, next) => {
   try {
-    // const { result, error } = await serviceGetUserId(req.params.id);
-    // if (error) {
-    //   return next(error.message);
-    // }
-    // if (!result) {
-    //   return next("User id not found");
-    // }
     const result = await serviceGetUserId(req.params.id);
     res.status(200).json(result);
   } catch (error) {

@@ -23,7 +23,7 @@ export const repocreateUser = async (user) => {
   try {
     const createUser = {
       ...user,
-      token: createToken(user.email, process.env.JWT_SECRET_KEY),
+      token: createToken(user.email, process.env.API_JWT_KEY),
     };
     const result = await User.create(createUser);
     return { result };
