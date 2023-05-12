@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import { firebaseConfig } from "../../firebase";
 import { initializeApp } from "firebase/app";
 import { useNavigation } from "@react-navigation/native";
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -32,7 +32,7 @@ const LoginScreen = () => {
     }
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user.user);
+      AsyncStorage.setItem('token', user.user.stsTokenManager.accessToken);
       navigation.navigate("Home", { email: user.user.email });
     } catch (error) {
       console.log(error);

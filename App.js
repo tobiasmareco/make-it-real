@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login"
@@ -23,6 +23,7 @@ export default function App() {
           component={HomeScreen}
           options={{
             headerBackVisible: false,
+            presentation:'modal'
           }}
         />
       </Stack.Navigator>
