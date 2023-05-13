@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
   Alert,
@@ -18,9 +17,12 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
+import { Button } from "@rneui/base";
+
 const LoginScreen = () => {
   const [email, setEmail] = useState("tmareco123@gmail.com");
   const [password, setPassword] = useState("123456");
+  const [loading, setLoading] = useState(false)
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -28,13 +30,16 @@ const LoginScreen = () => {
 
   const onPressLogin = async () => {
     if ([email.trim(), password.trim()].includes("")) {
+      setLoading(false)
       return alert("Complete los campos obligatorios.");
     }
     try {
+      setLoading(true)
       const user = await signInWithEmailAndPassword(auth, email, password);
       AsyncStorage.setItem('token', user.user.stsTokenManager.accessToken);
       navigation.navigate("Home", { email: user.user.email });
     } catch (error) {
+      setLoading(false)
       console.log(error);
       Alert.alert(error.message);
     }
@@ -71,9 +76,34 @@ const LoginScreen = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={onPressLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
+        {!loading ? (
+          <TouchableOpacity onPress={onPressLogin} style={styles.button}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+        ) : (
+          <Button
+            title="Login"
+            loading={loading}
+            loadingProps={{
+              size: 'small',
+              color: 'rgba(111, 202, 186, 1)',
+            }}
+            titleStyle={{ fontWeight: '700' }}
+            buttonStyle={{
+              backgroundColor: 'rgba(92, 99,216, 1)',
+              borderColor: 'transparent',
+              borderWidth: 0,
+              borderRadius: 5,
+              paddingVertical: 10,
+            }}
+            containerStyle={{
+              width: 200,
+              marginHorizontal: 50,
+              marginVertical: 10,
+            }}
+          />
+        )}
+
         <TouchableOpacity
           onPress={onPressRegister}
           style={[styles.button, styles.buttonOutline]}

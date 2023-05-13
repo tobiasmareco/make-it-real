@@ -1,11 +1,18 @@
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, SafeAreaView } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-console.clear();
+import { database } from "../../firebase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import Task from "../components/Task";
+
+import { FAB } from "@rneui/themed";
+
 const HomeScreen = () => {
   const { params } = useRoute();
   const navigation = useNavigation()
+  const [tasks, setTasks] = useState([])
+
   useEffect(() => {
     const getLoginUser = async () => {
       const token = await AsyncStorage.getItem('token');
@@ -13,7 +20,19 @@ const HomeScreen = () => {
         return navigation.navigate('Login')
       }
     }
-    getLoginUser()
+    getLoginUser();
+
+    const collectionRef = collection(database, 'tasks');
+    const qry = query(collectionRef)
+    const unsubscribe = onSnapshot(qry, querySnapshot => {
+      setTasks(querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        title: doc.data().title,
+        description: doc.data().description,
+        createdAt: doc.data().createdAt,
+      })))
+    })
+    return unsubscribe
   }, [params]);
   return (
     <View style={styles.container}>
@@ -42,11 +61,18 @@ const HomeScreen = () => {
       </View>
       <View style={styles.mainContainer}>
         <View style={styles.cardContainer}>
-          <Text>Tareas</Text>
+          {tasks.map((task)=>{
+            return <Task {...task} key={task.id} />
+          })}
         </View>
-        <TouchableOpacity style={styles.addContainer}>
-          <Text style={styles.textAdd}>Agregar tareas</Text>
-        </TouchableOpacity>
+        <FAB
+          visible={true}
+          icon={{ name: 'add', color: 'white' }}
+          color="green"
+          style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 10 }}
+          onPress={() => { navigation.navigate('Add') }}
+        />
+
       </View>
     </View>
   );
@@ -88,7 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     padding: 20,
-    gap:4
+    gap: 4
   },
   cardContainer: {
     display: 'flex',
@@ -107,6 +133,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 16,
     textTransform: 'uppercase',
-    color:'#fff'
+    color: '#fff'
   }
 });
