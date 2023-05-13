@@ -20,10 +20,10 @@ import {
 import { Button } from "@rneui/base";
 
 const LoginScreen = () => {
+
   const [email, setEmail] = useState("tmareco123@gmail.com");
   const [password, setPassword] = useState("123456");
   const [loading, setLoading] = useState(false)
-
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const navigation = useNavigation();

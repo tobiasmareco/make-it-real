@@ -11,10 +11,10 @@ const Task = ({ title, description, createdAt }) => {
         <Text>{description}</Text>
         <Text>{new Date(createdAt).toLocaleDateString()}</Text>
       </View>
-      {/* <View>
+      <View>
       <Button color="success">Editar</Button>
       <Button color="error">Eliminar</Button>
-      </View> */}
+      </View>
     </View>
   )
 }

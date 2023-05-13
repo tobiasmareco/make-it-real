@@ -10,3 +10,4 @@ export const firebaseConfig = {
 };
 
 export const database = getFirestore()
+

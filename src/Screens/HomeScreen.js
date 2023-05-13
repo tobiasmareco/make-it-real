@@ -2,8 +2,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, SafeAreaVi
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { database } from "../../firebase";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+// import { database } from "../../firebase";
+// import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import Task from "../components/Task";
 
 import { FAB } from "@rneui/themed";
@@ -22,17 +22,17 @@ const HomeScreen = () => {
     }
     getLoginUser();
 
-    const collectionRef = collection(database, 'tasks');
-    const qry = query(collectionRef)
-    const unsubscribe = onSnapshot(qry, querySnapshot => {
-      setTasks(querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        title: doc.data().title,
-        description: doc.data().description,
-        createdAt: doc.data().createdAt,
-      })))
-    })
-    return unsubscribe
+    // const collectionRef = collection(database, 'tasks');
+    // const qry = query(collectionRef)
+    // const unsubscribe = onSnapshot(qry, querySnapshot => {
+    //   setTasks(querySnapshot.docs.map(doc => ({
+    //     id: doc.id,
+    //     title: doc.data().title,
+    //     description: doc.data().description,
+    //     createdAt: doc.data().createdAt,
+    //   })))
+    // })
+    // return unsubscribe
   }, [params]);
   return (
     <View style={styles.container}>
