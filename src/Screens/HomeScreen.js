@@ -18,7 +18,8 @@ const HomeScreen = () => {
   useEffect(() => {
     const getLoginUser = async () => {
       const token = await AsyncStorage.getItem('token');
-      if (token.length < 1) {
+      if (!token || token?.length < 1 ) {
+        console.log('no hay token')
         return navigation.navigate('Login')
       }
     }
@@ -39,7 +40,7 @@ const HomeScreen = () => {
       console.log(error)
     }
 
-  }, [params]);
+  }, [params , AsyncStorage.getItem('token')]);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -69,7 +70,7 @@ const HomeScreen = () => {
         <View style={styles.cardContainer}>
           {tasks.length > 0 ? (tasks.map((task) => {
             return <Task {...task} key={task.id} />
-          })) :(
+          })) : (
             <Text>No se han creado tareas</Text>
           )}
         </View>
