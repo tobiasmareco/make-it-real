@@ -67,9 +67,11 @@ const HomeScreen = () => {
       </View>
       <View style={styles.mainContainer}>
         <View style={styles.cardContainer}>
-          {tasks.map((task) => {
+          {tasks.length > 0 ? (tasks.map((task) => {
             return <Task {...task} key={task.id} />
-          })}
+          })) :(
+            <Text>No se han creado tareas</Text>
+          )}
         </View>
         <FAB
           visible={true}

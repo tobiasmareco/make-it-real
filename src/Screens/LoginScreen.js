@@ -38,6 +38,7 @@ const LoginScreen = () => {
       const user = await signInWithEmailAndPassword(auth, email, password);
       AsyncStorage.setItem('token', user.user.stsTokenManager.accessToken);
       navigation.navigate("Home", { email: user.user.email });
+      setLoading(false)
     } catch (error) {
       setLoading(false)
       console.log(error);
