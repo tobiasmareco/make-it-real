@@ -120,14 +120,12 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   mainContainer: {
-    backgroundColor: 'white',
-    flex: 1,
-    padding: 20,
-    gap: 4
+    // backgroundColor: 'red',
+    flex:1,
+    padding:1,
+    gap: 5,
   },
   cardContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
     flex: 1,
   },
   addContainer: {
