@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import React from 'react'
 import { getDoc, getFirestore } from 'firebase/firestore'
 import { deleteDoc, updateDoc, doc } from 'firebase/firestore'
@@ -8,14 +8,16 @@ import { useNavigation } from '@react-navigation/native'
 const Task = ({ id, title, description, createdAt }) => {
   const navigation = useNavigation()
   const database = getFirestore()
-  const onDeletePress = () => {
-
+  const onDeletePress = async () => {
+    const docRef = doc(database, 'tasks', id)
+    const deleted = await deleteDoc(docRef)
+    Alert.alert('Elminar', 'Se ha eliminado la tarea');
   }
 
   const onEditPress = async () => {
     const docRef = doc(database, 'tasks', id);
     const data = await getDoc(docRef)
-    navigation.navigate('Add',{...data.data(),id})
+    navigation.navigate('Add', { ...data.data(), id })
   }
   return (
     <View style={styles.container}>
