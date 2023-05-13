@@ -2,12 +2,13 @@ import { View, Text, StyleSheet, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Input, Button, Icon } from '@rneui/themed';
 // import { database } from 'firebase/database'
-import { database } from '../../firebase';
+import { getFirestore } from 'firebase/firestore';
 import { collection, addDoc } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native';
 
 
 const AddTask = () => {
+  const database = getFirestore()
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const navigation = useNavigation();

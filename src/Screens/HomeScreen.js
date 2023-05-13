@@ -2,8 +2,9 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, SafeAreaVi
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-// import { database } from "../../firebase";
-// import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { getFirestore } from 'firebase/firestore'
+
 import Task from "../components/Task";
 
 import { FAB } from "@rneui/themed";
@@ -12,6 +13,7 @@ const HomeScreen = () => {
   const { params } = useRoute();
   const navigation = useNavigation()
   const [tasks, setTasks] = useState([])
+  const database = getFirestore()
 
   useEffect(() => {
     const getLoginUser = async () => {
@@ -21,18 +23,22 @@ const HomeScreen = () => {
       }
     }
     getLoginUser();
+    try {
+      const collectionRef = collection(database, 'tasks');
+      const qry = query(collectionRef)
+      const unsubscribe = onSnapshot(qry, querySnapshot => {
+        setTasks(querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          title: doc.data().title,
+          description: doc.data().description,
+          createdAt: doc.data().createdAt,
+        })))
+      })
+      return unsubscribe
+    } catch (error) {
+      console.log(error)
+    }
 
-    // const collectionRef = collection(database, 'tasks');
-    // const qry = query(collectionRef)
-    // const unsubscribe = onSnapshot(qry, querySnapshot => {
-    //   setTasks(querySnapshot.docs.map(doc => ({
-    //     id: doc.id,
-    //     title: doc.data().title,
-    //     description: doc.data().description,
-    //     createdAt: doc.data().createdAt,
-    //   })))
-    // })
-    // return unsubscribe
   }, [params]);
   return (
     <View style={styles.container}>
@@ -61,7 +67,7 @@ const HomeScreen = () => {
       </View>
       <View style={styles.mainContainer}>
         <View style={styles.cardContainer}>
-          {tasks.map((task)=>{
+          {tasks.map((task) => {
             return <Task {...task} key={task.id} />
           })}
         </View>
